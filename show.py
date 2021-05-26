@@ -31,8 +31,18 @@ def showResult_1(false_list,true_list):
     plt.legend(prop=Songti,loc='best')
     plt.show()
 
-
-
+'''只显示一种颜色'''
+def showResult_3(list):
+    Songti = fmgr.FontProperties(fname='C:\\Windows\\Fonts\\simsun.ttc')
+    x = [x + 0.05 for x in np.arange(0, 1, 0.1)]
+    width = 0.095
+    plt.bar(x, list, fc='green', width=width)
+    plt.xlabel('链路评分', fontproperties=Songti)
+    plt.ylabel('链路数量', fontproperties=Songti)
+    #height = max([max(false_list), max(true_list)])
+    #plt.yticks([t for t in range(0, height + 1, 2)], fontsize=12)
+    #plt.legend(prop=Songti, loc='best')
+    plt.show()
 
 if __name__ == "__main__":
     l = [0.1,0.1,0,0,0,0,0,0,0,0.8]

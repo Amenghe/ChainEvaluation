@@ -38,15 +38,29 @@ def evaluate_components(components_text,succeed_text,index):
     if components_text[index] == '':
         similarities = []
         for text in components_text:
-            similarities.append(1/len(components_text))
+            similarities.append(jaccard_similarity(text, succeed_text))
+        similarities[index] = 1
+        for similarity in similarities:
+            if similarities[index] > similarity:
+                similarities[index] = similarity
+        if similarities[index] == 0:
+            return [1 for i in range(similarities)]
+        if similarities[index] == 1:
+            similarities[index] = 0
         return similarities
+
 
     similarities = []
     for text in components_text:
+
+        '''组件文本与后继页面标题相似'''
         if text in succeed_text.split(' ')[0] or succeed_text.split(' ')[0] in text:
             similarities.append(1)
             continue
+
+
         similarities.append(jaccard_similarity(text, succeed_text))
+
 
     '''若待选组件相似度接近平均相似度'''
     if -0.1 <= similarities[index] - sum(similarities) / len(similarities) <= 0.1:

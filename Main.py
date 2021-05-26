@@ -1,7 +1,7 @@
 import os
 
 from evaluator import evaluate_one_chain
-from show import showResult, showResult_1
+from show import showResult, showResult_1, showResult_3
 from util import getChains
 
 def drawer_0():
@@ -55,5 +55,53 @@ def drawer_1():
             false_y[index] += 1
     showResult_1(true_list=true_y, false_list=false_y)
 
+def drawer_2():
+    '''第二种画图方法'''
+    file_names = ["Skit.csv"]
+    chains = []
+    labels = []
+    scores = []
+    false_y = [0 for i in range(10)]
+    true_y = [0 for i in range(10)]
+    for file in file_names:
+        chain, label = getChains(file)
+        chains = chains + chain
+        labels = labels + label
+    for i in range(len(chains)):
+        score = evaluate_one_chain(chains[i])
+        print('评分{0:1.3f}   {1}   链路：{2}'.format(score, labels[i], chains[i]))
+        scores.append(score)
+        index = int(10 * score) if score < 1 else 9
+        if labels[i] == "True":
+            true_y[index] += 1
+        else:
+            false_y[index] += 1
+    showResult_1(true_list=true_y, false_list=false_y)
+
+def drawer_3():
+    file_names = ["Skit.csv"]
+    chains = []
+    labels = []
+    scores = []
+    false_y = [0 for i in range(10)]
+    true_y = [0 for i in range(10)]
+    all_y = []
+    for file in file_names:
+        chain, label = getChains(file)
+        chains = chains + chain
+        labels = labels + label
+    for i in range(len(chains)):
+        score = evaluate_one_chain(chains[i])
+        print('评分{0:1.3f}   {1}   链路：{2}'.format(score, labels[i], chains[i]))
+        scores.append(score)
+        index = int(10 * score) if score < 1 else 9
+        if labels[i] == "True":
+            true_y[index] += 1
+        else:
+            false_y[index] += 1
+    for i in range(10):
+        all_y.append(false_y[i] + true_y[i])
+    showResult_3(all_y)
+
 if __name__ == "__main__":
-    drawer_1()
+    drawer_3()
